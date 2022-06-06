@@ -1,0 +1,191 @@
+{% extends 'MyProducts/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}{% translate "Stock Detail" %}{% endblock %}</title>
+
+	<style type="text/css">
+		   table{
+        background-color: white;
+        border-radius: 15px;
+        
+
+       
+
+      }
+
+      table tbody tr td,
+table thead tr th,
+table thead{
+  border-left: 2px solid black;
+  border-right:2px solid black;
+  border-bottom: 2px solid black;
+  border-top: 2px solid black; 
+  color: black;
+  font-size: 20px;
+}
+.batani{
+        background-color: blue;
+        width: 4cm;
+        color: white;
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 1cm;
+      }
+
+input{
+  
+  padding: 15px;
+  margin: 5px;
+  border-radius: 10px;
+  border: 2px solid blue;
+}
+
+	</style>
+</head>
+<body>
+
+
+       {% if messages %}
+    {% for message in messages %}
+     
+
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{message}}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+    {% endfor %}
+  {% endif %}
+
+
+
+
+
+<div class="container">
+
+
+  <div class="row">
+
+    <div class="col-md-2" style="margin-top: 1cm;">
+ 
+
+<div style="margin-bottom: 1cm;">
+  {% if user.is_superuser %}
+<a href="{% url 'issue_items' queryset.id %}"class="btn btn-primary btn-md my-0 p" type="submit" style="margin-bottom:3cm;margin-bottom: 1cm;"> {% translate "ISSUE THIS ITEM" %}  </a> </div>
+<div style="margin-bottom: 1cm;">
+<a href="{% url 'receive_items' queryset.id %}"class="btn btn-success btn-md my-0 p" type="submit" style="margin-bottom:3cm;margin-bottom: 1cm;"> {% translate "RECEIVE THIS ITEM" %}  </a> </div>
+{% else %}
+<a href=""class="btn btn-primary btn-md my-0 p" type="submit" style="margin-bottom:3cm;margin-bottom: 1cm;"> {% translate "ONYL ADMIN CAN ISSUE THIS ITEM" %}  </a> </div>
+<div style="margin-bottom: 1cm;">
+<a href=""class="btn btn-success btn-md my-0 p" type="submit" style="margin-bottom:3cm;margin-bottom: 1cm;"> {% translate "ONYL ADMIN CAN RECEIVE THIS ITEM" %}  </a> </div>
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="col-md-10">
+<center>
+	<h1 style="color: white;font-family: bold;"> {{queryset.item_name}}</h1>
+
+	
+
+	
+</center>
+
+{% if queryset %}
+
+<div class="table-responsive text-nowrap">
+  <table class="table">
+  <thead>
+    <tr>
+    	
+      <th>{% translate "Item Name" %}</th>
+       <th>{% translate "Category" %}</th>
+       <th>{% translate "Quantity" %}</th>
+        <th>{% translate "ReOrder Level" %}</th>
+         <th>{% translate "Sales Amount" %} </th>
+          <th>{% translate "Purchasing Amount" %} </th>
+       
+         <th>{% translate "Added When" %}</th>
+          <th>{% translate "Last Updated" %}</th>
+        
+         
+    </tr>
+  </thead>
+
+  <tbody>
+    
+    <tr>
+    	
+      <td>{{queryset.item_name}}</td>
+      <td>{{queryset.category}}</td>
+       <!--tunaapply style km quantity zikiwa chini ya re order level iyonekane rangi gani--->
+      {% if queryset.quantity <= queryset.reorder_level %}
+      <td style="background-color: red;color: white">{{queryset.quantity}}</td>
+      {% else %}
+      <td>
+      {{queryset.quantity}}
+      </td>
+      {% endif %}
+
+      {% if user.is_superuser %}
+      <td><a href="{% url 'reorder_level' queryset.id %}"class="btn btn-primary btn-md my-0 p" type="submit" style="color: white;font-weight: bold;">{{queryset.reorder_level}}</a> </td>
+
+<td>
+<a href="{% url 'receive_amount' queryset.id %}"class="btn btn-primary btn-md my-0 p" type="submit" style="color: white;font-weight: bold;">{{queryset.sales_amount}}</a> </td>
+
+<td>
+<a href="{% url 'issued_amount' queryset.id %}"class="btn btn-primary btn-md my-0 p" type="submit" style="color: white;font-weight: bold;">{{queryset.purchasing_amount}}</a> </td>
+{% else %}
+<td><a href="#"class="btn btn-primary btn-md my-0 p" type="submit" style="color: white;font-weight: bold;">{{queryset.reorder_level}}</a> </td>
+
+<td>
+<a href="#"class="btn btn-primary btn-md my-0 p" type="submit" style="color: white;font-weight: bold;">{{queryset.sales_amount}}</a> </td>
+
+<td>
+<a href="#"class="btn btn-primary btn-md my-0 p" type="submit" style="color: white;font-weight: bold;">{{queryset.purchasing_amount}}</a> </td>
+{% endif %}
+       
+      <td>{{queryset.timestamp|date:'d-m-Y H:i' }}</td>
+      <td>{{queryset.last_updated|date:'d-m-Y H:i' }}</td>
+       
+
+      
+      
+     
+    </tr>
+
+   
+  </tbody>
+  </table>
+  
+</div>
+
+{% else %}
+<h1>{% translate "There is no Any Item in a Stock" %}</h1>
+
+{% endif %}
+
+
+	</div><!--mwisho wa column ya width 8--->
+
+
+	</div><!--mwisho wa row --->
+	
+</div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,265 @@
+{% extends 'MyProducts/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block title %}{% translate "Add Item" %} {% endblock %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+  *{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+
+
+body{
+  background: white;
+  overflow: hidden;
+}
+::selection{
+  background: rgba(26,188,156,0.3);
+}
+
+.wrapper{
+  width: 100%;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.1);
+}
+.wrapper .title{
+  height: 90px;
+  background: #16a085;
+  border-radius: 5px 5px 0 0;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper form{
+  padding: 30px 25px 25px 25px;
+}
+
+ input{
+  height: 100%;
+  margin-bottom: 1cm;
+  width: 100%;
+  outline: none;
+  padding:10px;
+  border-radius: 5px;
+  border: 4px solid black;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+ form select{
+  height: 100%;
+  margin-bottom: 1cm;
+  width: 100%;
+  outline: none;
+  padding:10px;
+  border-radius: 5px;
+  border: 4px solid black;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+ form textarea{
+ 
+  margin-bottom: 10px;
+  width: 100%;
+  outline: none;
+  padding:10px;
+  border-radius: 5px;
+  border: 4px solid black;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+form .row input:focus{
+  border-color: #16a085;
+  box-shadow: inset 0px 0px 2px 2px rgba(26,188,156,0.25);
+}
+form .row input::placeholder{
+  color: #999;
+}
+.wrapper form .row i{
+  position: absolute;
+  width: 47px;
+  height: 100%;
+  color: #fff;
+  font-size: 18px;
+  background: #16a085;
+  border: 1px solid #16a085;
+  border-radius: 5px 0 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper form .pass{
+  margin: -8px 0 20px 0;
+}
+.wrapper form .pass a{
+  color: #16a085;
+  font-size: 17px;
+  text-decoration: none;
+}
+.wrapper form .pass a:hover{
+  text-decoration: underline;
+}
+.wrapper form .button input{
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  padding-left: 0px;
+  background: #16a085;
+  border: 1px solid #16a085;
+  cursor: pointer;
+}
+form .button input:hover{
+  background: #12876f;
+}
+.wrapper form .signup-link{
+  text-align: center;
+  margin-top: 20px;
+  font-size: 17px;
+}
+.wrapper form .signup-link a{
+  color: #16a085;
+  text-decoration: none;
+}
+form .signup-link a:hover{
+  text-decoration: underline;
+}
+
+
+
+    </style>
+</head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="title"><span>{% translate "Add Items" %}</span></div>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+
+<div class="row">
+  <div class="col-md-4">
+    
+ 
+
+           <div class="row_inputi" style="margin-bottom: 1cm;">
+            
+            {{form.category.label}}<br>
+            {{form.category}}
+    
+       
+          </div>
+
+          <div class="row_inputi" style="margin-bottom: 1cm;">
+            {{form.item_name.label}}<br>
+            {{form.item_name}}
+   
+          </div>
+
+
+         
+
+
+          <div class="row_inputi" style="margin-bottom: 1cm;">
+            {{form.quantity.label}}<br>
+            {{form.quantity}}
+          </div>
+
+      
+
+ </div>
+
+ <div class="col-md-4">
+
+      <div class="row_inputi" style="margin-bottom: 1cm;">
+           {{form.price.label}}<br>
+            {{form.price}}
+          </div>
+   
+
+<div class="row_inputi" style="margin-bottom: 1cm;">
+           {{form.discount_price.label}}<br>
+            {{form.discount_price}}
+          </div>
+
+        
+
+          <div class="row_inputi" style="margin-bottom: 1cm;">
+           {{form.available.label}}<br>
+            {{form.available}}
+          </div>
+
+
+ </div>
+
+
+
+  <div class="col-md-4">
+
+  <div class="row_inputi" style="margin-bottom: 1cm;">
+           {{form.description.label}}<br>
+            {{form.description}}
+          </div>
+
+
+          <div class="row_inputi" style="margin-bottom: 1cm;">
+           {{form.image.label}}<br>
+            {{form.image}}
+          </div>
+
+
+  </div>
+      
+
+
+
+</div><!---mwisho wa row --->
+        
+
+
+
+
+
+<p>
+  {% for error in field.errors %}
+  <p style="color: red">{{error}}</p>
+  {% endfor %}
+</p>
+
+
+
+
+
+          <div class="row button">
+            <input type="submit" value="Save">
+          </div>
+         
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>
+   
+
+   
+
+{% endblock %}
